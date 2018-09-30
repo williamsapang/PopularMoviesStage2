@@ -88,7 +88,6 @@ public class FavoriteDatabaseProvider extends ContentProvider {
             Uri _uri = Uri.parse("Duplicate");
             return _uri;
         }
-        //throw new SQLException("Failed to add a record into " + uri);
     }
 
     @Override
