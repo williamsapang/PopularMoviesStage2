@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Popular Movies Stage 2</string>
+    <string name="release_date">Release Date</string>
+    <string name="user_ratings">User Ratings :</string>
+    <string name="overview">Overview</string>
+    <string name="textview">TextView</string>
+    <string name="favorite_success">Added to favorites successfully!</string>
+    <string name="favorite_exists">Already exists in favorites!</string>
+</resources>
