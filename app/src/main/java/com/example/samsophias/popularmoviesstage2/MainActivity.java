@@ -37,12 +37,17 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Integer> ids;
     private RecyclerView recyclerView;
 
+    public static int scrollX = 0;
+    public static int scrollY = -1;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView = findViewById(R.id.rec);
-
         Intent i = getIntent();
         String sort_type = i.getStringExtra("sort_type");
         if (sort_type == null) sort_type = "popular";
@@ -51,6 +56,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putIntArray("SCROLL_POSITION",
+                new int[]{ recyclerView.getScrollX(), recyclerView.getScrollY()});
+    }
+
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        final int[] position = savedInstanceState.getIntArray("SCROLL_POSITION");
+        if(position != null)
+            recyclerView.post(new Runnable() {
+                public void run() {
+                    recyclerView.scrollTo(position[0], position[1]);
+                }
+            });
+    }
     private void showFavorites() {
 
     }
@@ -231,5 +253,29 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(myAdapter);
 
         }
+
+
+    }
+
+
+    @Override
+    protected void onPause()
+    {
+        super.onPause();
+        scrollX = recyclerView.getScrollX();
+        scrollY = recyclerView.getScrollY();
+    }
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        recyclerView.post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                recyclerView.scrollTo(scrollX, scrollY);
+            }
+        });
     }
 }
